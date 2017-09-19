@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+ext {
+    imagerVersion = "0.1"
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+jar {
+    manifest {
+        attributes(
+                "Main-Class": "github.hellocsl.rn.imager.Imager",
+        )
+    }
+}
+
+task makeJar(type: Copy) {
+    delete("release/imager-"+imagerVersion+".jar")
+    from('build/libs/')
+    into('release/')
+    include('imager.jar')
+    rename('imager.jar', "imager-"+imagerVersion+".jar")
+}
+
+makeJar.dependsOn(jar)
